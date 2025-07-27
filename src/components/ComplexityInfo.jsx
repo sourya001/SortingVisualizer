@@ -1,0 +1,112 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+const complexityData = {
+  bubbleSort: {
+    time: { best: 'O(n)', average: 'O(n²)', worst: 'O(n²)' },
+    space: 'O(1)',
+    description: 'Bubble Sort repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order.',
+    stable: true,
+    inPlace: true
+  },
+  selectionSort: {
+    time: { best: 'O(n²)', average: 'O(n²)', worst: 'O(n²)' },
+    space: 'O(1)',
+    description: 'Selection Sort divides the array into sorted and unsorted regions, repeatedly finding the minimum element.',
+    stable: false,
+    inPlace: true
+  },
+  insertionSort: {
+    time: { best: 'O(n)', average: 'O(n²)', worst: 'O(n²)' },
+    space: 'O(1)',
+    description: 'Insertion Sort builds the final sorted array one item at a time, inserting each element in its correct position.',
+    stable: true,
+    inPlace: true
+  },
+  mergeSort: {
+    time: { best: 'O(n log n)', average: 'O(n log n)', worst: 'O(n log n)' },
+    space: 'O(n)',
+    description: 'Merge Sort uses divide-and-conquer approach, recursively dividing the array and merging sorted subarrays.',
+    stable: true,
+    inPlace: false
+  },
+  quickSort: {
+    time: { best: 'O(n log n)', average: 'O(n log n)', worst: 'O(n²)' },
+    space: 'O(log n)',
+    description: 'Quick Sort uses a pivot element to partition the array, recursively sorting the partitions.',
+    stable: false,
+    inPlace: true
+  }
+};
+
+const ComplexityInfo = ({ algorithm }) => {
+  const data = complexityData[algorithm];
+
+  if (!data) return null;
+
+  return (
+    <motion.div 
+      className="card"
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.4, duration: 0.5 }}
+    >
+      <h3>Algorithm Analysis</h3>
+      
+      <div className="complexity-section">
+        <h4 style={{ color: 'var(--accent-color)', marginBottom: '0.75rem', fontSize: '1rem' }}>
+          Time Complexity
+        </h4>
+        <div className="complexity-item">
+          <span className="complexity-label">Best Case:</span>
+          <span className="complexity-value">{data.time.best}</span>
+        </div>
+        <div className="complexity-item">
+          <span className="complexity-label">Average Case:</span>
+          <span className="complexity-value">{data.time.average}</span>
+        </div>
+        <div className="complexity-item">
+          <span className="complexity-label">Worst Case:</span>
+          <span className="complexity-value">{data.time.worst}</span>
+        </div>
+      </div>
+
+      <div className="complexity-section" style={{ marginTop: '1rem' }}>
+        <h4 style={{ color: 'var(--accent-color)', marginBottom: '0.75rem', fontSize: '1rem' }}>
+          Space Complexity
+        </h4>
+        <div className="complexity-item">
+          <span className="complexity-label">Space:</span>
+          <span className="complexity-value">{data.space}</span>
+        </div>
+      </div>
+
+      <div className="algorithm-properties" style={{ marginTop: '1rem' }}>
+        <h4 style={{ color: 'var(--accent-color)', marginBottom: '0.75rem', fontSize: '1rem' }}>
+          Properties
+        </h4>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <span className={`property-tag ${data.stable ? 'stable' : 'unstable'}`}>
+            {data.stable ? 'Stable' : 'Unstable'}
+          </span>
+          <span className={`property-tag ${data.inPlace ? 'in-place' : 'not-in-place'}`}>
+            {data.inPlace ? 'In-place' : 'Not in-place'}
+          </span>
+        </div>
+      </div>
+
+      <div className="algorithm-description" style={{ marginTop: '1rem' }}>
+        <p style={{ 
+          fontSize: '0.9rem', 
+          lineHeight: '1.5', 
+          color: 'var(--text-secondary)',
+          fontStyle: 'italic'
+        }}>
+          {data.description}
+        </p>
+      </div>
+    </motion.div>
+  );
+};
+
+export default ComplexityInfo;
