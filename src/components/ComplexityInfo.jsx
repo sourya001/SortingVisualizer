@@ -75,20 +75,6 @@ const ComplexityInfo = ({ algorithm }) => {
           <span className="complexity-value">{data.space}</span>
         </div>
       </div>
-
-      <div className="algorithm-properties" style={{ marginTop: '1rem' }}>
-        <h4 style={{ color: 'var(--accent-color)', marginBottom: '0.75rem', fontSize: '1rem' }}>
-          Properties
-        </h4>
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <span className={`property-tag ${data.stable ? 'stable' : 'unstable'}`}>
-            {data.stable ? 'Stable' : 'Unstable'}
-          </span>
-          <span className={`property-tag ${data.inPlace ? 'in-place' : 'not-in-place'}`}>
-            {data.inPlace ? 'In-place' : 'Not in-place'}
-          </span>
-        </div>
-      </div>
     </motion.div>
   );
 };

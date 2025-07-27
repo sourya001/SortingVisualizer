@@ -86,51 +86,6 @@ const StatsPanel = ({
           ✅ Array Sorted Successfully!
         </motion.div>
       )}
-
-      <div className="efficiency-metrics" style={{ marginTop: '1rem' }}>
-        <h4 style={{ 
-          color: 'var(--accent-color)', 
-          marginBottom: '0.75rem', 
-          fontSize: '1rem' 
-        }}>
-          Efficiency Metrics
-        </h4>
-        
-        <div className="metric-item" style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          marginBottom: '0.5rem',
-          fontSize: '0.9rem'
-        }}>
-          <span>Comparisons per element:</span>
-          <span style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>
-            {arraySize > 0 ? (comparisons / arraySize).toFixed(2) : '0.00'}
-          </span>
-        </div>
-        
-        <div className="metric-item" style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          marginBottom: '0.5rem',
-          fontSize: '0.9rem'
-        }}>
-          <span>Swaps per element:</span>
-          <span style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>
-            {arraySize > 0 ? (swaps / arraySize).toFixed(2) : '0.00'}
-          </span>
-        </div>
-        
-        <div className="metric-item" style={{ 
-          display: 'flex', 
-          justifyContent: 'space-between', 
-          fontSize: '0.9rem'
-        }}>
-          <span>Operations per second:</span>
-          <span style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>
-            {timeElapsed > 0 ? Math.round((comparisons + swaps) / (timeElapsed / 1000)) : '0'}
-          </span>
-        </div>
-      </div>
     </motion.div>
   );
 };

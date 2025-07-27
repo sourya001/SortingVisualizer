@@ -3,21 +3,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const ArrayBar = ({ array }) => {
   const [containerWidth, setContainerWidth] = useState(800);
+  const [containerHeight, setContainerHeight] = useState(600);
   const wrapperRef = useRef(null);
   
   const maxValue = Math.max(...array.map(item => item.value));
-  const containerHeight = 350;
 
   useEffect(() => {
-    const updateWidth = () => {
+    const updateDimensions = () => {
       if (wrapperRef.current) {
         const width = wrapperRef.current.offsetWidth;
+        const height = wrapperRef.current.offsetHeight;
         setContainerWidth(width - 20); // Account for padding
+        setContainerHeight(height - 20); // Account for padding
       }
     };
 
-    updateWidth();
-    const resizeObserver = new ResizeObserver(updateWidth);
+    updateDimensions();
+    const resizeObserver = new ResizeObserver(updateDimensions);
     if (wrapperRef.current) {
       resizeObserver.observe(wrapperRef.current);
     }
