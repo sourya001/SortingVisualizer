@@ -164,13 +164,6 @@ function App() {
       <div className="app-content">
         <div className="left-panel">
           <ComplexityInfo algorithm={selectedAlgorithm} />
-          <StatsPanel 
-            comparisons={comparisons}
-            swaps={swaps}
-            timeElapsed={timeElapsed}
-            arraySize={arraySize}
-            isSorted={isSorted}
-          />
         </div>
 
         <div className="main-content">
@@ -194,7 +187,13 @@ function App() {
         </div>
 
         <div className="right-panel">
-          {/* Additional features can be added here */}
+          <StatsPanel 
+            comparisons={comparisons}
+            swaps={swaps}
+            timeElapsed={timeElapsed}
+            arraySize={arraySize}
+            isSorted={isSorted}
+          />
         </div>
       </div>
     </div>
