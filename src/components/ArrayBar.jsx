@@ -62,10 +62,8 @@ const ArrayBar = ({ array }) => {
         const height = (item.value / maxValue) * containerHeight;
         
         let className = 'array-bar';
-        if (item.isComparing) className += ' comparing';
-        if (item.isSwapping) className += ' swapping';
-        if (item.isSorted) className += ' sorted';
-        if (item.isPivot) className += ' pivot';
+        if (item.isMoving) className += ' moving';
+        if (item.isCorrect) className += ' correct';
 
         return (
           <motion.div

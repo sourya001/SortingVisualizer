@@ -156,17 +156,14 @@ function App() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            Enhanced Sorting Visualizer
+            Sorting Visualizer
           </motion.span>
         </h1>
       </motion.header>
 
       <div className="app-content">
-        <div className="left-panel">
-          <ComplexityInfo algorithm={selectedAlgorithm} />
-        </div>
-
-        <div className="main-content">
+        {/* Top Section - Controller Only */}
+        <div className="controller-section">
           <ControlPanel
             arraySize={arraySize}
             setArraySize={handleArraySizeChange}
@@ -178,22 +175,31 @@ function App() {
             startSorting={startSorting}
             isRunning={isRunning}
           />
-          
-          <div className="array-container-wrapper">
-            <div className="array-container">
-              <ArrayBar array={array} />
-            </div>
-          </div>
         </div>
 
-        <div className="right-panel">
-          <StatsPanel 
-            comparisons={comparisons}
-            swaps={swaps}
-            timeElapsed={timeElapsed}
-            arraySize={arraySize}
-            isSorted={isSorted}
-          />
+        {/* Main Section - Algorithm Analysis, Graph, Statistics */}
+        <div className="main-section">
+          <div className="analysis-panel">
+            <ComplexityInfo algorithm={selectedAlgorithm} />
+          </div>
+
+          <div className="graph-panel">
+            <div className="array-container-wrapper">
+              <div className="array-container">
+                <ArrayBar array={array} />
+              </div>
+            </div>
+          </div>
+
+          <div className="stats-panel">
+            <StatsPanel 
+              comparisons={comparisons}
+              swaps={swaps}
+              timeElapsed={timeElapsed}
+              arraySize={arraySize}
+              isSorted={isSorted}
+            />
+          </div>
         </div>
       </div>
     </div>

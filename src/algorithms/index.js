@@ -21,44 +21,35 @@ export const bubbleSort = async (initialArray, updateArray, setComparisons, setS
 
   for (let i = 0; i < n - 1; i++) {
     for (let j = 0; j < n - i - 1; j++) {
-      // Highlight comparing elements
-      array = updateArrayItem(array, j, { isComparing: true });
-      array = updateArrayItem(array, j + 1, { isComparing: true });
+      // Highlight moving elements
+      array = updateArrayItem(array, j, { isMoving: true });
+      array = updateArrayItem(array, j + 1, { isMoving: true });
       await updateArray(array);
       
       comparisons++;
       setComparisons(comparisons);
 
       if (array[j].value > array[j + 1].value) {
-        // Highlight swapping elements
-        array = updateArrayItem(array, j, { isSwapping: true, isComparing: false });
-        array = updateArrayItem(array, j + 1, { isSwapping: true, isComparing: false });
-        await updateArray(array);
-
         // Perform swap
         array = swapElements(array, j, j + 1);
         swaps++;
         setSwaps(swaps);
         await updateArray(array);
-
-        // Remove swapping highlight
-        array = updateArrayItem(array, j, { isSwapping: false });
-        array = updateArrayItem(array, j + 1, { isSwapping: false });
-      } else {
-        // Remove comparing highlight
-        array = updateArrayItem(array, j, { isComparing: false });
-        array = updateArrayItem(array, j + 1, { isComparing: false });
       }
+
+      // Remove moving highlight
+      array = updateArrayItem(array, j, { isMoving: false });
+      array = updateArrayItem(array, j + 1, { isMoving: false });
       
       await updateArray(array);
     }
-    // Mark element as sorted
-    array = updateArrayItem(array, n - 1 - i, { isSorted: true });
+    // Mark element as in correct position
+    array = updateArrayItem(array, n - 1 - i, { isCorrect: true });
     await updateArray(array);
   }
   
-  // Mark first element as sorted
-  array = updateArrayItem(array, 0, { isSorted: true });
+  // Mark first element as in correct position
+  array = updateArrayItem(array, 0, { isCorrect: true });
   await updateArray(array);
 };
 
@@ -73,12 +64,12 @@ export const selectionSort = async (initialArray, updateArray, setComparisons, s
     let minIndex = i;
     
     // Highlight current minimum
-    array = updateArrayItem(array, minIndex, { isPivot: true });
+    array = updateArrayItem(array, minIndex, { isMoving: true });
     await updateArray(array);
 
     for (let j = i + 1; j < n; j++) {
       // Highlight comparing element
-      array = updateArrayItem(array, j, { isComparing: true });
+      array = updateArrayItem(array, j, { isMoving: true });
       await updateArray(array);
       
       comparisons++;
@@ -86,43 +77,33 @@ export const selectionSort = async (initialArray, updateArray, setComparisons, s
 
       if (array[j].value < array[minIndex].value) {
         // Remove old minimum highlight
-        array = updateArrayItem(array, minIndex, { isPivot: false });
+        array = updateArrayItem(array, minIndex, { isMoving: false });
         minIndex = j;
-        // Highlight new minimum
-        array = updateArrayItem(array, minIndex, { isPivot: true });
+        // Keep new minimum highlighted
+      } else {
+        // Remove comparing highlight
+        array = updateArrayItem(array, j, { isMoving: false });
       }
       
-      // Remove comparing highlight
-      array = updateArrayItem(array, j, { isComparing: false });
       await updateArray(array);
     }
 
     if (minIndex !== i) {
-      // Highlight swapping elements
-      array = updateArrayItem(array, i, { isSwapping: true });
-      array = updateArrayItem(array, minIndex, { isSwapping: true, isPivot: false });
-      await updateArray(array);
-
       // Perform swap
       array = swapElements(array, i, minIndex);
       swaps++;
       setSwaps(swaps);
       await updateArray(array);
-
-      // Remove swapping highlight
-      array = updateArrayItem(array, i, { isSwapping: false });
-      array = updateArrayItem(array, minIndex, { isSwapping: false });
-    } else {
-      array = updateArrayItem(array, minIndex, { isPivot: false });
     }
 
-    // Mark element as sorted
-    array = updateArrayItem(array, i, { isSorted: true });
+    // Remove moving highlight and mark as correct
+    array = updateArrayItem(array, minIndex, { isMoving: false });
+    array = updateArrayItem(array, i, { isCorrect: true });
     await updateArray(array);
   }
   
-  // Mark last element as sorted
-  array = updateArrayItem(array, n - 1, { isSorted: true });
+  // Mark last element as correct
+  array = updateArrayItem(array, n - 1, { isCorrect: true });
   await updateArray(array);
 };
 
@@ -133,8 +114,8 @@ export const insertionSort = async (initialArray, updateArray, setComparisons, s
   let swaps = 0;
   const n = array.length;
 
-  // Mark first element as sorted
-  array = updateArrayItem(array, 0, { isSorted: true });
+  // Mark first element as correct
+  array = updateArrayItem(array, 0, { isCorrect: true });
   await updateArray(array);
 
   for (let i = 1; i < n; i++) {
@@ -142,45 +123,39 @@ export const insertionSort = async (initialArray, updateArray, setComparisons, s
     let j = i - 1;
     
     // Highlight current element being inserted
-    array = updateArrayItem(array, i, { isPivot: true });
+    array = updateArrayItem(array, i, { isMoving: true });
     await updateArray(array);
 
     while (j >= 0) {
       // Highlight comparing element
-      array = updateArrayItem(array, j, { isComparing: true });
+      array = updateArrayItem(array, j, { isMoving: true });
       await updateArray(array);
       
       comparisons++;
       setComparisons(comparisons);
 
       if (array[j].value > key) {
-        // Highlight swapping elements
-        array = updateArrayItem(array, j, { isSwapping: true, isComparing: false });
-        array = updateArrayItem(array, j + 1, { isSwapping: true });
-        await updateArray(array);
-
         // Perform swap
         array = swapElements(array, j, j + 1);
         swaps++;
         setSwaps(swaps);
         await updateArray(array);
 
-        // Remove swapping highlight
-        array = updateArrayItem(array, j, { isSwapping: false });
-        array = updateArrayItem(array, j + 1, { isSwapping: false });
+        // Remove highlight from left element
+        array = updateArrayItem(array, j, { isMoving: false });
         
         j--;
       } else {
         // Remove comparing highlight
-        array = updateArrayItem(array, j, { isComparing: false });
+        array = updateArrayItem(array, j, { isMoving: false });
         break;
       }
       
       await updateArray(array);
     }
 
-    // Remove pivot highlight and mark as sorted
-    array = updateArrayItem(array, j + 1, { isPivot: false, isSorted: true });
+    // Remove moving highlight and mark as correct
+    array = updateArrayItem(array, j + 1, { isMoving: false, isCorrect: true });
     await updateArray(array);
   }
 };
@@ -198,18 +173,18 @@ export const mergeSort = async (initialArray, updateArray, setComparisons, setSw
     let i = 0, j = 0, k = left;
 
     while (i < leftArr.length && j < rightArr.length) {
-      // Highlight comparing elements
-      array = updateArrayItem(array, k, { isComparing: true });
+      // Highlight moving element
+      array = updateArrayItem(array, k, { isMoving: true });
       await updateArray(array);
       
       comparisons++;
       setComparisons(comparisons);
 
       if (leftArr[i].value <= rightArr[j].value) {
-        array[k] = { ...leftArr[i], isComparing: false };
+        array[k] = { ...leftArr[i], isMoving: false };
         i++;
       } else {
-        array[k] = { ...rightArr[j], isComparing: false };
+        array[k] = { ...rightArr[j], isMoving: false };
         j++;
         swaps++;
         setSwaps(swaps);
@@ -220,22 +195,22 @@ export const mergeSort = async (initialArray, updateArray, setComparisons, setSw
     }
 
     while (i < leftArr.length) {
-      array[k] = { ...leftArr[i], isComparing: false };
+      array[k] = { ...leftArr[i], isMoving: false };
       i++;
       k++;
       await updateArray(array);
     }
 
     while (j < rightArr.length) {
-      array[k] = { ...rightArr[j], isComparing: false };
+      array[k] = { ...rightArr[j], isMoving: false };
       j++;
       k++;
       await updateArray(array);
     }
 
-    // Mark merged section as sorted
+    // Mark merged section as correct
     for (let idx = left; idx <= right; idx++) {
-      array = updateArrayItem(array, idx, { isSorted: true });
+      array = updateArrayItem(array, idx, { isCorrect: true });
     }
     await updateArray(array);
   };
@@ -263,14 +238,14 @@ export const quickSort = async (initialArray, updateArray, setComparisons, setSw
     const pivot = arr[high].value;
     
     // Highlight pivot
-    array = updateArrayItem(array, high, { isPivot: true });
+    array = updateArrayItem(array, high, { isMoving: true });
     await updateArray(array);
     
     let i = low - 1;
 
     for (let j = low; j < high; j++) {
       // Highlight comparing element
-      array = updateArrayItem(array, j, { isComparing: true });
+      array = updateArrayItem(array, j, { isMoving: true });
       await updateArray(array);
       
       comparisons++;
@@ -280,25 +255,16 @@ export const quickSort = async (initialArray, updateArray, setComparisons, setSw
         i++;
         
         if (i !== j) {
-          // Highlight swapping elements
-          array = updateArrayItem(array, i, { isSwapping: true });
-          array = updateArrayItem(array, j, { isSwapping: true, isComparing: false });
-          await updateArray(array);
-
           // Perform swap
           array = swapElements(array, i, j);
           swaps++;
           setSwaps(swaps);
           await updateArray(array);
-
-          // Remove swapping highlight
-          array = updateArrayItem(array, i, { isSwapping: false });
-          array = updateArrayItem(array, j, { isSwapping: false });
-        } else {
-          array = updateArrayItem(array, j, { isComparing: false });
         }
+        
+        array = updateArrayItem(array, j, { isMoving: false });
       } else {
-        array = updateArrayItem(array, j, { isComparing: false });
+        array = updateArrayItem(array, j, { isMoving: false });
       }
       
       await updateArray(array);
@@ -306,23 +272,15 @@ export const quickSort = async (initialArray, updateArray, setComparisons, setSw
 
     // Place pivot in correct position
     if (i + 1 !== high) {
-      array = updateArrayItem(array, i + 1, { isSwapping: true });
-      array = updateArrayItem(array, high, { isSwapping: true, isPivot: false });
-      await updateArray(array);
-
       array = swapElements(array, i + 1, high);
       swaps++;
       setSwaps(swaps);
       await updateArray(array);
-
-      array = updateArrayItem(array, i + 1, { isSwapping: false });
-      array = updateArrayItem(array, high, { isSwapping: false });
-    } else {
-      array = updateArrayItem(array, high, { isPivot: false });
     }
 
-    // Mark pivot as sorted
-    array = updateArrayItem(array, i + 1, { isSorted: true });
+    // Remove pivot highlight and mark as correct
+    array = updateArrayItem(array, high, { isMoving: false });
+    array = updateArrayItem(array, i + 1, { isCorrect: true });
     await updateArray(array);
 
     return i + 1;
@@ -334,8 +292,8 @@ export const quickSort = async (initialArray, updateArray, setComparisons, setSw
       await quickSortHelper(arr, low, pi - 1);
       await quickSortHelper(arr, pi + 1, high);
     } else if (low === high) {
-      // Single element is sorted
-      array = updateArrayItem(array, low, { isSorted: true });
+      // Single element is correct
+      array = updateArrayItem(array, low, { isCorrect: true });
       await updateArray(array);
     }
   };

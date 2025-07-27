@@ -1,4 +1,4 @@
-# 🎯 Enhanced Sorting Visualizer
+# 🎯 Sorting Visualizer
 
 A beautiful, interactive sorting algorithm visualizer built with React, Vite, and Framer Motion. This project provides real-time visual representation of popular sorting algorithms with smooth animations, statistics tracking, and comprehensive algorithm information.
 
@@ -19,11 +19,9 @@ A beautiful, interactive sorting algorithm visualizer built with React, Vite, an
 - **Modern UI**: Clean, professional interface with gradient backgrounds
 - **Smooth Animations**: Powered by Framer Motion for fluid transitions
 - **Color-coded Elements**:
-  - 🔵 **Blue**: Default elements
-  - 🟡 **Yellow**: Elements being compared
-  - 🔴 **Red**: Elements being swapped
-  - 🟢 **Green**: Sorted elements
-  - 🟣 **Purple**: Pivot elements (Quick Sort)
+  - � **Red**: Elements in wrong position (default state)
+  - 🟡 **Yellow**: Elements being moved or compared
+  - � **Green**: Elements in correct position
 
 ### 📱 Responsive Design
 - **Mobile-first**: Optimized for all screen sizes
